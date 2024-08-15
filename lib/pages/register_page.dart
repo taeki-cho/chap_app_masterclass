@@ -1,40 +1,19 @@
-import 'package:chap_app_masterclass/auth/auth_service.dart';
 import 'package:chap_app_masterclass/components/my_button.dart';
 import 'package:chap_app_masterclass/components/my_textfield.dart';
-import 'package:chap_app_masterclass/themes/light_mode.dart';
 import 'package:flutter/material.dart';
 
-class LoginPage extends StatelessWidget {
+class RegisterPage extends StatelessWidget {
   final TextEditingController _emailController = TextEditingController();
   final TextEditingController _pwController = TextEditingController();
+  final TextEditingController _confirmPwController = TextEditingController();
 
-  // 회원가입 페이지 이동
+  // 로그인 페이지 이동
   final void Function()? onTap;
 
   // login 함수
-  void login(BuildContext context) async {
-    // auth service
-    final authService = AuthService();
+  void register() {}
 
-    // 로그인 처리
-    try {
-      await authService.signInWithEmailPassword(
-        _emailController.text,
-        _pwController.text,
-      );
-    } catch (e) {
-      showDialog(
-        context: context,
-        builder: (context) => AlertDialog(
-          title: Text(
-            e.toString(),
-          ),
-        ),
-      );
-    }
-  }
-
-  LoginPage({super.key, required this.onTap});
+  RegisterPage({super.key, required this.onTap});
 
   @override
   Widget build(BuildContext context) {
@@ -55,7 +34,7 @@ class LoginPage extends StatelessWidget {
             ),
             // 환영 인사
             Text(
-              "Welcome bacl, you're been missed!",
+              "Let's create an account for you",
               style: TextStyle(
                 color: Theme.of(context).colorScheme.primary,
                 fontSize: 16,
@@ -80,12 +59,21 @@ class LoginPage extends StatelessWidget {
               controller: _pwController,
             ),
             const SizedBox(
+              height: 10,
+            ),
+            // 패스워드 확인
+            MyTextfield(
+              hindText: "Confirm Password",
+              obscureText: true,
+              controller: _confirmPwController,
+            ),
+            const SizedBox(
               height: 25,
             ),
             // 로그인 버튼
             MyButton(
-              text: "LogIn",
-              onTap: () => login(context),
+              text: "Register",
+              onTap: register,
             ),
             const SizedBox(
               height: 25,
@@ -95,7 +83,7 @@ class LoginPage extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 Text(
-                  "Not a member? ",
+                  "Already have an account? ",
                   style: TextStyle(
                     color: Theme.of(context).colorScheme.primary,
                   ),
@@ -103,7 +91,7 @@ class LoginPage extends StatelessWidget {
                 GestureDetector(
                   onTap: onTap,
                   child: Text(
-                    "Register now",
+                    "Login now",
                     style: TextStyle(
                       fontWeight: FontWeight.bold,
                       color: Theme.of(context).colorScheme.primary,
