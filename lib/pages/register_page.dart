@@ -1,3 +1,4 @@
+import 'package:chap_app_masterclass/services/auth/auth_service.dart';
 import 'package:chap_app_masterclass/components/my_button.dart';
 import 'package:chap_app_masterclass/components/my_textfield.dart';
 import 'package:flutter/material.dart';
@@ -11,7 +12,37 @@ class RegisterPage extends StatelessWidget {
   final void Function()? onTap;
 
   // login 함수
-  void register() {}
+  void register(BuildContext context) async {
+    final auth = AuthService();
+
+    // 패스워드가 동일한지 체크
+    if (_pwController.text == _confirmPwController.text) {
+      try {
+        await auth.singUpWithEmailPassword(
+          _emailController.text,
+          _pwController.text,
+        );
+      } catch (e) {
+        showDialog(
+          context: context,
+          builder: (context) => AlertDialog(
+            title: Text(
+              e.toString(),
+            ),
+          ),
+        );
+      }
+    }
+    // 패스워드가 동일하지 않으면 에러
+    else {
+      showDialog(
+        context: context,
+        builder: (context) => const AlertDialog(
+          title: Text("패스워드가 일치하지 않습니다."),
+        ),
+      );
+    }
+  }
 
   RegisterPage({super.key, required this.onTap});
 
@@ -73,7 +104,7 @@ class RegisterPage extends StatelessWidget {
             // 로그인 버튼
             MyButton(
               text: "Register",
-              onTap: register,
+              onTap: () => register(context),
             ),
             const SizedBox(
               height: 25,

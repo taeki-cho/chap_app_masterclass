@@ -1,18 +1,21 @@
-import 'package:chap_app_masterclass/auth/auth_gate.dart';
-import 'package:chap_app_masterclass/auth/login_or_register.dart';
+import 'package:chap_app_masterclass/services/auth/auth_gate.dart';
 import 'package:chap_app_masterclass/firebase_options.dart';
-import 'package:chap_app_masterclass/pages/login_page.dart';
-import 'package:chap_app_masterclass/pages/register_page.dart';
-import 'package:chap_app_masterclass/themes/light_mode.dart';
+import 'package:chap_app_masterclass/themes/theme_provider.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
   );
-  runApp(const MyApp());
+  runApp(
+    ChangeNotifierProvider(
+      create: (context) => ThemeProvider(),
+      child: const MyApp(),
+    ),
+  );
 }
 
 class MyApp extends StatelessWidget {
@@ -24,7 +27,7 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       home: const AuthGate(),
-      theme: lightMode,
+      theme: Provider.of<ThemeProvider>(context).themeData,
     );
   }
 }

@@ -1,7 +1,6 @@
-import 'package:chap_app_masterclass/auth/auth_service.dart';
+import 'package:chap_app_masterclass/services/auth/auth_service.dart';
 import 'package:chap_app_masterclass/components/my_button.dart';
 import 'package:chap_app_masterclass/components/my_textfield.dart';
-import 'package:chap_app_masterclass/themes/light_mode.dart';
 import 'package:flutter/material.dart';
 
 class LoginPage extends StatelessWidget {
