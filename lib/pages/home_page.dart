@@ -29,7 +29,7 @@ class HomePage extends StatelessWidget {
   // 현재 로그인한 사용자의 목록
   Widget _buildUserList() {
     return StreamBuilder(
-      stream: _chatService.getUsersStream(),
+      stream: _chatService.getUsersStreamExcludingBlocked(),
       builder: (context, snapshot) {
         // 에러
         if (!snapshot.hasData) {
